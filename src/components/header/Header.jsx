@@ -46,7 +46,8 @@ const Header = () => {
   return (
     <header className="header">
       <button className="button create-event-btn">
-        <i className="fas fa-plus create-event-btn__icon"></i>Create
+        <i className="fas fa-plus create-event-btn__icon" id="colored-plus"></i>
+        Create
       </button>
       <div className="navigation">
         <button className="navigation__today-btn button" onClick={handleToday}>
