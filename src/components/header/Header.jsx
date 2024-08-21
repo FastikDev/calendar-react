@@ -15,9 +15,18 @@ const Header = () => {
     const startMonth = moment(weekRange[0]).format("MMM");
     const endMonth = moment(weekRange[6]).format("MMM");
 
-    setDispalayedMoth(
-      startMonth === endMonth ? startMonth : `${startMonth} - ${endMonth}`
-    );
+    const startYear = moment(weekRange[0]).format("YYYY");
+    const endYear = moment(weekRange[6]).format("YYYY");
+
+    if (startYear === endYear) {
+      setDispalayedMoth(
+        startMonth === endMonth
+          ? `${startMonth} ${startYear}`
+          : `${startMonth} - ${endMonth} ${endYear}`
+      );
+    } else {
+      setDispalayedMoth(`${startMonth} ${startYear} - ${endMonth} ${endYear}`);
+    }
   };
 
   useEffect(() => {
