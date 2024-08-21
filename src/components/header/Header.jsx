@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { generateWeekRange, getWeekStartDate } from "../../utils/dateUtils";
+import Modal from "../modal/Modal";
 import "./header.scss";
 
 const Header = () => {

@@ -62,6 +62,15 @@
 
   &__day-number {
     font-size: 22px;
+    width: 45px;
+    height: 45px;
+    padding: 8px;
+    text-align: center;
+
+    &_today {
+      background-color: #1323d1;
+      border-radius: 50%;
+    }
   }
 }
 

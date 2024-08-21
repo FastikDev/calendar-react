@@ -1,6 +1,5 @@
 .header {
   display: flex;
-  position: fixed;
   height: 60px;
   padding: 0 48px;
   align-items: center;
@@ -10,6 +9,17 @@
   padding: 0 16px;
   background: transparent;
   border-radius: 50px;
+  box-shadow: 0 3px 0px #ccc;
+  transition: all 0.2s;
+  position: relative;
+  top: 0px;
+  cursor: pointer;
+
+  &:active {
+    top: 3px;
+    box-shadow: 0 1px 0px #ccc;
+    transition: all 0.2s;
+  }
 
   &__icon {
     margin-right: 8px;
@@ -22,6 +32,17 @@
     padding: 0 16px;
     background: transparent;
     border-radius: 8px;
+    box-shadow: 0 3px 0px #ccc;
+    transition: all 0.2s;
+    position: relative;
+    top: 0px;
+    cursor: pointer;
+
+    &:active {
+      top: 3px;
+      box-shadow: 0 1px 0px #ccc;
+      transition: all 0.2s;
+    }
   }
 
   &__nav-icon {
