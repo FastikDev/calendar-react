@@ -4,37 +4,24 @@ import { generateWeekRange, getWeekStartDate } from "../../utils/dateUtils";
 import Modal from "../modal/Modal";
 import "./header.scss";
 
+import Navigation from './Navigation'; // Импорт компонента Navigation
+
 const Header = () => {
-  const [displayedMonth, setDispalayedMoth] = useState("");
-  const [currentDate, setCurrenDate] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [weekDates, setWeekDates] = useState([]);
 
-  const updateDisplayedMonth = (date) => {
+  const updateDisplayedWeek = (date) => {
     const startOfWeek = getWeekStartDate(date);
-    const weekRange = generateWeekRange(startOfWeek);
-
-    const startMonth = moment(weekRange[0]).format("MMM");
-    const endMonth = moment(weekRange[6]).format("MMM");
-
-    const startYear = moment(weekRange[0]).format("YYYY");
-    const endYear = moment(weekRange[6]).format("YYYY");
-
-    if (startYear === endYear) {
-      setDispalayedMoth(
-        startMonth === endMonth
-          ? `${startMonth} ${startYear}`
-          : `${startMonth} - ${endMonth} ${endYear}`
-      );
-    } else {
-      setDispalayedMoth(`${startMonth} ${startYear} - ${endMonth} ${endYear}`);
-    }
+    const newWeekDates = generateWeekRange(startOfWeek);
+    setWeekDates(newWeekDates);
   };
 
   useEffect(() => {
-    updateDisplayedMonth(currentDate);
+    updateDisplayedWeek(currentDate);
   }, [currentDate]);
 
   const handlePrevWeek = () => {
-    setCurrenDate((prevDate) => {
+    setCurrentDate(prevDate => {
       const newDate = new Date(prevDate);
       newDate.setDate(prevDate.getDate() - 7);
       return newDate;
@@ -42,7 +29,7 @@ const Header = () => {
   };
 
   const handleNextWeek = () => {
-    setCurrenDate((prevDate) => {
+    setCurrentDate(prevDate => {
       const newDate = new Date(prevDate);
       newDate.setDate(prevDate.getDate() + 7);
       return newDate;
@@ -50,34 +37,30 @@ const Header = () => {
   };
 
   const handleToday = () => {
-    setCurrenDate(new Date());
+    setCurrentDate(new Date());
   };
 
   return (
-    <header className="header">
-      <button className="button create-event-btn">
-        <i className="fas fa-plus create-event-btn__icon" id="colored-plus"></i>
-        Create
-      </button>
-      <div className="navigation">
-        <button className="navigation__today-btn button" onClick={handleToday}>
-          Today
+    <div>
+      <header className="header">
+        <button className="button create-event-btn">
+          <i className="fas fa-plus create-event-btn__icon"></i>Create
         </button>
-        <button
-          className="icon-button navigation__nav-icon"
-          onClick={handlePrevWeek}
-        >
-          <i className="fas fa-chevron-left"></i>
-        </button>
-        <button
-          className="icon-button navigation__nav-icon"
-          onClick={handleNextWeek}
-        >
-          <i className="fas fa-chevron-right"></i>
-        </button>
-        <span className="navigation__displayed-month">{displayedMonth}</span>
-      </div>
-    </header>
+        <div className="navigation">
+          <button className="navigation__today-btn button" onClick={handleToday}>Today</button>
+          <button className="icon-button navigation__nav-icon" onClick={handlePrevWeek}>
+            <i className="fas fa-chevron-left"></i>
+          </button>
+          <button className="icon-button navigation__nav-icon" onClick={handleNextWeek}>
+            <i className="fas fa-chevron-right"></i>
+          </button>
+          <span className="navigation__displayed-week">
+            {weekDates.length > 0 && moment(weekDates[0]).format('MMM YYYY')} - {moment(weekDates[6]).format('MMM YYYY')}
+          </span>
+        </div>
+      </header>
+      <Navigation weekDates={weekDates} />
+    </div>
   );
 };
 
