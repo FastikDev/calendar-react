@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-
+// Calendar.jsx
+import React, { useState, useEffect } from "react";
 import Navigation from "./../navigation/Navigation";
 import Week from "../week/Week";
 import Sidebar from "../sidebar/Sidebar";
 import events from "../../gateway/events";
-
+import { generateWeekRange, getWeekStartDate } from "../../utils/dateUtils";
+import moment from "moment";
 import "./calendar.scss";
 
 const Calendar = ({ weekDates }) => {

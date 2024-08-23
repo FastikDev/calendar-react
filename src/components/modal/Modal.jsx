@@ -1,13 +1,14 @@
 import React from "react";
-
 import "./modal.scss";
 
-const Modal = () => {
+const Modal = ({ closeModal }) => {
   return (
     <div className="modal overlay">
       <div className="modal__content">
         <div className="create-event">
-          <button className="create-event__close-btn">+</button>
+          <button className="create-event__close-btn" onClick={closeModal}>
+            +
+          </button>
           <form className="event-form">
             <input
               type="text"
@@ -21,7 +22,6 @@ const Modal = () => {
                 type="time"
                 name="startTime"
                 className="event-form__field"
-                onChange={handleChange}
               />
               <span>-</span>
               <input type="time" name="endTime" className="event-form__field" />

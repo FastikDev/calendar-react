@@ -1,66 +1,86 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import moment from "moment";
-import { generateWeekRange, getWeekStartDate } from "../../utils/dateUtils";
 import Modal from "../modal/Modal";
 import "./header.scss";
 
-import Navigation from './Navigation'; // Импорт компонента Navigation
+const Header = ({ weekStartDate, setWeekStartDate }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-const Header = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [weekDates, setWeekDates] = useState([]);
-
-  const updateDisplayedWeek = (date) => {
-    const startOfWeek = getWeekStartDate(date);
-    const newWeekDates = generateWeekRange(startOfWeek);
-    setWeekDates(newWeekDates);
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
-  useEffect(() => {
-    updateDisplayedWeek(currentDate);
-  }, [currentDate]);
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const startOfWeek = moment(weekStartDate);
+  const endOfWeek = moment(weekStartDate).add(6, "days");
+
+  const getDisplayedDate = () => {
+    const startMonth = startOfWeek.format("MMM");
+    const startYear = startOfWeek.format("YYYY");
+
+    const endMonth = endOfWeek.format("MMM");
+    const endYear = endOfWeek.format("YYYY");
+
+    if (startYear === endYear) {
+      if (startMonth === endMonth) {
+        return `${startMonth} ${startYear}`;
+      } else {
+        return `${startMonth} - ${endMonth} ${startYear}`;
+      }
+    } else {
+      return `${startMonth} ${startYear} - ${endMonth} ${endYear}`;
+    }
+  };
 
   const handlePrevWeek = () => {
-    setCurrentDate(prevDate => {
+    setWeekStartDate((prevDate) => {
       const newDate = new Date(prevDate);
-      newDate.setDate(prevDate.getDate() - 7);
+      newDate.setDate(newDate.getDate() - 7);
       return newDate;
     });
   };
 
   const handleNextWeek = () => {
-    setCurrentDate(prevDate => {
+    setWeekStartDate((prevDate) => {
       const newDate = new Date(prevDate);
-      newDate.setDate(prevDate.getDate() + 7);
+      newDate.setDate(newDate.getDate() + 7);
       return newDate;
     });
   };
 
   const handleToday = () => {
-    setCurrentDate(new Date());
+    setWeekStartDate(new Date());
   };
 
   return (
-    <div>
-      <header className="header">
-        <button className="button create-event-btn">
-          <i className="fas fa-plus create-event-btn__icon"></i>Create
+    <header className="header">
+      <button className="button create-event-btn" onClick={openModal}>
+        <i className="fas fa-plus create-event-btn__icon" id="colored-plus"></i>
+        Create
+      </button>
+      <div className="navigation">
+        <button className="navigation__today-btn button" onClick={handleToday}>
+          Today
         </button>
-        <div className="navigation">
-          <button className="navigation__today-btn button" onClick={handleToday}>Today</button>
-          <button className="icon-button navigation__nav-icon" onClick={handlePrevWeek}>
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <button className="icon-button navigation__nav-icon" onClick={handleNextWeek}>
-            <i className="fas fa-chevron-right"></i>
-          </button>
-          <span className="navigation__displayed-week">
-            {weekDates.length > 0 && moment(weekDates[0]).format('MMM YYYY')} - {moment(weekDates[6]).format('MMM YYYY')}
-          </span>
-        </div>
-      </header>
-      <Navigation weekDates={weekDates} />
-    </div>
+        <button
+          className="icon-button navigation__nav-icon"
+          onClick={handlePrevWeek}
+        >
+          <i className="fas fa-chevron-left"></i>
+        </button>
+        <button
+          className="icon-button navigation__nav-icon"
+          onClick={handleNextWeek}
+        >
+          <i className="fas fa-chevron-right"></i>
+        </button>
+        <span className="navigation__displayed-week">{getDisplayedDate()}</span>
+      </div>
+      {isModalOpen && <Modal closeModal={closeModal} />}
+    </header>
   );
 };
 

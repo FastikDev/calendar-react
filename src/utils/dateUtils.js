@@ -1,47 +1,53 @@
 import moment from "moment";
 
+moment.updateLocale("en", {
+  week: {
+    dow: 1, // Начало недели с понедельника
+  },
+});
+
 export const getWeekStartDate = (date) => {
   const dateCopy = new Date(date);
   const dayOfWeek = dateCopy.getDay();
-  const difference =
-    dayOfWeek === 0
-      ? -6 // for Sunday
-      : 1 - dayOfWeek;
+  const difference = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
 
-  const monday = new Date(dateCopy.setDate(date.getDate() + difference));
-  return new Date(monday.getFullYear(), monday.getMonth(), monday.getDate());
+  dateCopy.setDate(dateCopy.getDate() + difference);
+  return new Date(
+    dateCopy.getFullYear(),
+    dateCopy.getMonth(),
+    dateCopy.getDate()
+  );
 };
 
 export const generateWeekRange = (startDate) => {
   const result = [];
-  for (let i = 0; i < 7; i += 1) {
+  for (let i = 0; i < 7; i++) {
     const base = new Date(startDate);
-    result.push(new Date(base.setDate(base.getDate() + i)));
+    base.setDate(base.getDate() + i);
+    result.push(new Date(base));
   }
   return result;
 };
 
 export const getDateTime = (date, time) => {
-  const [hours, minutes] = time.split(":");
-  const withHours = new Date(new Date(date).setHours(Number(hours)));
-  const withMinutes = new Date(new Date(withHours).setMinutes(Number(minutes)));
-  return withMinutes;
+  const [hours, minutes] = time.split(":").map(Number);
+  const resultDate = new Date(date);
+  resultDate.setHours(hours, minutes);
+  return resultDate;
 };
 
-export const formatMins = (mins) => {
-  return mins < 10 ? `0${mins}` : mins;
-};
+export const formatMins = (mins) => (mins < 10 ? `0${mins}` : mins);
 
 export const getDisplayMoth = (date) => {
   const startWeek = moment(date).startOf("week");
   const endWeek = moment(date).endOf("week");
-  const startMoth = startWeek.format("MMM");
+  const startMonth = startWeek.format("MMM");
   const startYear = startWeek.format("YYYY");
-  const endMoth = endWeek.format("MMM");
+  const endMonth = endWeek.format("MMM");
   const endYear = endWeek.format("YYYY");
 
-  if (startMoth === endMoth) {
-    return `${startMoth} ${startYear}`;
+  if (startMonth === endMonth) {
+    return `${startMonth} ${startYear}`;
   }
 
   return startYear === endYear
@@ -50,6 +56,7 @@ export const getDisplayMoth = (date) => {
 };
 
 export const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
 export const months = [
   "January",
   "February",

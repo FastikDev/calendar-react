@@ -1,6 +1,5 @@
-import React from 'react';
-
-import './event.scss';
+import React from "react";
+import "./event.scss";
 
 const Event = ({ height, marginTop, title, time }) => {
   const eventStyle = {
