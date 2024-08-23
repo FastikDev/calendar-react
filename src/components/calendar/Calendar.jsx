@@ -8,7 +8,7 @@ import { generateWeekRange, getWeekStartDate } from "../../utils/dateUtils";
 import moment from "moment";
 import "./calendar.scss";
 
-const Calendar = ({ weekDates }) => {
+const Calendar = ({ weekDates, events, setEvents }) => {
   const [eventsState] = useState(events);
 
   return (
@@ -17,7 +17,7 @@ const Calendar = ({ weekDates }) => {
       <div className="calendar__body">
         <div className="calendar__week-container">
           <Sidebar />
-          <Week weekDates={weekDates} events={eventsState} />
+          <Week weekDates={weekDates} events={events} setEvents={setEvents}/>
         </div>
       </div>
     </section>
