@@ -22,6 +22,31 @@
 }
 
 .delete-event-btn {
-  cursor: pointer;
+  position: absolute; /* Позиционирование кнопки */
+  top: 8px; /* Отступ от верхнего края карточки */
+  right: 8px; /* Отступ от правого края карточки */
+  background: transparent; /* Цвет фона кнопки */
   border: none;
+  color: #fff; /* Цвет текста и иконки */
+  width: 18px; /* Ширина кнопки */
+  height: 18px; /* Высота кнопки */
+  display: flex; /* Выравнивание иконки по центру */
+  align-items: center; /* Вертикальное выравнивание */
+  justify-content: center; /* Горизонтальное выравнивание */
+  cursor: pointer; /* Указатель при наведении */
+  font-size: 14px; /* Размер шрифта */
+  transition: background 0.3s; /* Плавный переход для изменения цвета */
+
+  &:hover {
+    color: #000; /* Цвет фона кнопки при наведении */
+  }
+
+  &:focus {
+    outline: none; /* Убрать контур при фокусировке */
+  }
+
+  &::before {
+    content: "X";
+    font-size: 12px;
+  }
 }

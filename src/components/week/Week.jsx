@@ -1,8 +1,9 @@
 import React from "react";
 import Day from "../day/Day";
 import "./week.scss";
+import testEvents from "../../gateway/testEvents";
 
-const Week = ({ weekDates, events, setEvents, month }) => {
+const Week = ({ weekDates, events, setEvents, testEvents, month }) => {
   return (
     <div className="calendar__week">
       {weekDates.map((dayStart) => {
@@ -24,6 +25,7 @@ const Week = ({ weekDates, events, setEvents, month }) => {
             dayEvents={dayEvents} // Массив событий для дня передается в Day через пропс dayEvents
             setEvents={setEvents}
             month={month}
+            testEvents={testEvents}
           />
         );
       })}

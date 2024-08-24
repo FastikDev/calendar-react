@@ -1,21 +1,29 @@
 import React from "react";
 import "./event.scss";
 
-const Event = ({ height, marginTop, title, time, description, testEvents }) => {
+const Event = ({
+  id,
+  height,
+  marginTop,
+  title,
+  time,
+  description,
+  testEvents,
+  setEvents,
+}) => {
   const eventStyle = {
     height,
     marginTop,
   };
 
-  const handleDelete = (id) => {
-    testEvents.filter((event) => event.id !== id);
+  const handleDelete = () => {
+    const updatedEvents = testEvents.filter((event) => event.id !== id);
+    setEvents(updatedEvents);
   };
 
   return (
     <div style={eventStyle} className="event">
-      <button className="event__close-btn" onClick={handleDelete}>
-        X
-      </button>
+      <button className="delete-event-btn" onClick={handleDelete}></button>
       <div className="event__title">{title}</div>
       <div className="event__time">{time}</div>
       <div className="event__description">{description}</div>

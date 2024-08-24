@@ -5,7 +5,7 @@ import Sidebar from "../sidebar/Sidebar";
 import "./calendar.scss";
 import { getDisplayMonth, getWeekStartDate } from "../../utils/dateUtils";
 
-const Calendar = ({ weekDates, events, setEvents }) => {
+const Calendar = ({ weekDates, events, setEvents, testEvents }) => {
   const month = getDisplayMonth(getWeekStartDate(weekDates));
 
   return (
@@ -19,6 +19,7 @@ const Calendar = ({ weekDates, events, setEvents }) => {
             month={month}
             events={events} // Массив events передается в Week через пропс events
             setEvents={setEvents}
+            testEvents={testEvents}
           />
         </div>
       </div>

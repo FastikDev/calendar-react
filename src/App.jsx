@@ -22,6 +22,7 @@ const App = () => {
         weekDates={weekDates}
         events={events} // Массив testEvents передается в Calendar через пропс events
         setEvents={setEvents}
+        testEvents={events}
       />
     </>
   );

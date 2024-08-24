@@ -1,7 +1,7 @@
 import React from "react";
 import Hour from "../hour/Hour";
 
-const Day = ({ dataDay, dayEvents, setEvents, month }) => {
+const Day = ({ dataDay, dayEvents, setEvents, testEvents, month }) => {
   const hours = Array(24)
     .fill()
     .map((val, index) => index);
@@ -22,6 +22,7 @@ const Day = ({ dataDay, dayEvents, setEvents, month }) => {
             setEvents={setEvents}
             dataDay={dataDay}
             month={month}
+            testEvents={testEvents}
           />
         );
       })}
