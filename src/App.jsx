@@ -1,23 +1,29 @@
-import React, { useState } from "react";
-import Header from "./components/header/Header.jsx";
-import Calendar from "./components/calendar/Calendar.jsx";
-import { getWeekStartDate, generateWeekRange } from "../src/utils/dateUtils.js";
-import "./common.scss";
+import React from "react";
+import Navigation from "./../navigation/Navigation";
+import Week from "../week/Week";
+import Sidebar from "../sidebar/Sidebar";
+import "./calendar.scss";
+import { getDisplayMonth, getWeekStartDate } from "../../utils/dateUtils";
 
-const App = () => {
-  const [weekStartDate, setWeekStartDate] = useState(new Date());
-
-  const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
+const Calendar = ({ weekDates, events, setEvents }) => {
+  const month = getDisplayMonth(getWeekStartDate(weekDates));
 
   return (
-    <>
-      <Header
-        weekStartDate={weekStartDate}
-        setWeekStartDate={setWeekStartDate}
-      />
-      <Calendar weekDates={weekDates} />
-    </>
+    <section className="calendar">
+      <Navigation weekDates={weekDates} />
+      <div className="calendar__body">
+        <div className="calendar__week-container">
+          <Sidebar />
+          <Week
+            weekDates={weekDates}
+            month={month}
+            events={events} // Массив events передается в Week через пропс events
+            setEvents={setEvents}
+          />
+        </div>
+      </div>
+    </section>
   );
 };
 
-export default App;
+export default Calendar;

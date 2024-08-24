@@ -1,15 +1,12 @@
-// Calendar.jsx
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Navigation from "./../navigation/Navigation";
 import Week from "../week/Week";
 import Sidebar from "../sidebar/Sidebar";
-import events from "../../gateway/events";
-import { generateWeekRange, getWeekStartDate } from "../../utils/dateUtils";
-import moment from "moment";
 import "./calendar.scss";
+import { getDisplayMoth, getWeekStartDate } from "../../utils/dateUtils";
 
-const Calendar = ({ weekDates }) => {
-  const [eventsState] = useState(events);
+const Calendar = ({ weekDates, events, setEvents }) => {
+  const month = getDisplayMoth(getWeekStartDate(weekDates));
 
   return (
     <section className="calendar">
@@ -17,7 +14,12 @@ const Calendar = ({ weekDates }) => {
       <div className="calendar__body">
         <div className="calendar__week-container">
           <Sidebar />
-          <Week weekDates={weekDates} events={eventsState} />
+          <Week
+            weekDates={weekDates}
+            month={month}
+            events={events}
+            setEvents={setEvents}
+          />
         </div>
       </div>
     </section>

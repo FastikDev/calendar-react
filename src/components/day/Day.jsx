@@ -1,25 +1,18 @@
 import React from "react";
-import Hour from "../hour/Hour";
+import "./event.scss";
 
-const Day = ({ dataDay, dayEvents }) => {
-  const hours = Array(24)
-    .fill()
-    .map((val, index) => index);
+const Event = ({ height, marginTop, title, time }) => {
+  const eventStyle = {
+    height,
+    marginTop,
+  };
 
   return (
-    <div className="calendar__day" data-day={dataDay}>
-      {hours.map((hour) => {
-        //getting all events from the day we will render
-        const hourEvents = dayEvents.filter(
-          (event) => event.dateFrom.getHours() === hour
-        );
-
-        return (
-          <Hour key={dataDay + hour} dataHour={hour} hourEvents={hourEvents} />
-        );
-      })}
+    <div style={eventStyle} className="event">
+      <div className="event__title">{title}</div>
+      <div className="event__time">{time}</div>
     </div>
   );
 };
 
-export default Day;
+export default Event;
