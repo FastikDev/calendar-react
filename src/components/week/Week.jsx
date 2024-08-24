@@ -2,24 +2,28 @@ import React from "react";
 import Day from "../day/Day";
 import "./week.scss";
 
-const Week = ({ events, setEvents, weekDates }) => {
+const Week = ({ weekDates, events, setEvents, month }) => {
   return (
     <div className="calendar__week">
       {weekDates.map((dayStart) => {
-        const dayEnd = new Date(dayStart);
-        dayEnd.setHours(dayEnd.getHours() + 24);
+        const dayEnd = new Date(dayStart.getTime()).setHours(
+          dayStart.getHours() + 24
+        );
 
-        // getting all events from the day we will render
+        // Получаем все события для текущего дня
         const dayEvents = events.filter(
-          (event) => new Date(event.dateFrom) >= dayStart && new Date(event.dateFrom) < dayEnd
+          (event) =>
+            new Date(event.dateFrom) >= dayStart &&
+            new Date(event.dateFrom) < dayEnd
         );
 
         return (
           <Day
-            key={dayStart.getDate()}
+            key={dayStart}
             dataDay={dayStart.getDate()}
-            dayEvents={dayEvents}
+            dayEvents={dayEvents} // Массив событий для дня передается в Day через пропс dayEvents
             setEvents={setEvents}
+            month={month}
           />
         );
       })}
