@@ -38,7 +38,7 @@ export const getDateTime = (date, time) => {
 
 export const formatMins = (mins) => (mins < 10 ? `0${mins}` : mins);
 
-export const getDisplayMoth = (date) => {
+export const getDisplayMonth = (date) => {
   const startWeek = moment(date).startOf("week");
   const endWeek = moment(date).endOf("week");
   const startMonth = startWeek.format("MMM");

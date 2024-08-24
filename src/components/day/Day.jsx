@@ -1,13 +1,30 @@
 import React from "react";
-import "./event.scss";
+import Hour from "../hour/Hour";
 
-const Event = ({ height, marginTop, title, time }) => {
-  const eventStyle = {
-    height,
-    marginTop,
-  };
+const Day = ({ dataDay, dayEvents, setEvents, month }) => {
+  const hours = Array(24)
+    .fill()
+    .map((val, index) => index);
 
   return (
+    <div className="calendar__day" data-day={dataDay}>
+      {hours.map((hour) => {
+        // Получаем все события для текущего часа
+        const hourEvents = dayEvents.filter(
+          (event) => event.dateFrom.getHours() === hour
+        );
+
+        return (
+          <Hour
+            key={`${dataDay}-${hour}`}
+            dataHour={hour}
+            hourEvents={hourEvents} // Массив событий для часа передается в Hour через пропс hourEvents
+            setEvents={setEvents}
+            dataDay={dataDay}
+            month={month}
+          />
+        );
+      })}
     <div style={eventStyle} className="event">
       <div className="event__title">{title}</div>
       <div className="event__time">{time}</div>
@@ -15,4 +32,4 @@ const Event = ({ height, marginTop, title, time }) => {
   );
 };
 
-export default Event;
+export default Day;
