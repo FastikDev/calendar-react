@@ -3,10 +3,10 @@ import Navigation from "./../navigation/Navigation";
 import Week from "../week/Week";
 import Sidebar from "../sidebar/Sidebar";
 import "./calendar.scss";
-import { getDisplayMoth, getWeekStartDate } from "../../utils/dateUtils";
+import { getDisplayMonth, getWeekStartDate } from "../../utils/dateUtils";
 
 const Calendar = ({ weekDates, events, setEvents }) => {
-  const month = getDisplayMoth(getWeekStartDate(weekDates));
+  const month = getDisplayMonth(getWeekStartDate(weekDates));
 
   return (
     <section className="calendar">
@@ -17,7 +17,7 @@ const Calendar = ({ weekDates, events, setEvents }) => {
           <Week
             weekDates={weekDates}
             month={month}
-            events={events}
+            events={events} // Массив events передается в Week через пропс events
             setEvents={setEvents}
           />
         </div>
