@@ -25,9 +25,6 @@ const Day = ({ dataDay, dayEvents, setEvents, month }) => {
           />
         );
       })}
-    <div style={eventStyle} className="event">
-      <div className="event__title">{title}</div>
-      <div className="event__time">{time}</div>
     </div>
   );
 };
