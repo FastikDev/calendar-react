@@ -2,6 +2,7 @@ import React from "react";
 import Event from "../event/Event";
 import { formatMins } from "../../../src/utils/dateUtils.js";
 import "./hour.scss";
+import testEvents from "../../gateway/testEvents.js";
 
 const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
   return (
@@ -24,6 +25,7 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
             description={description}
             setEvents={setEvents} // Пропс setEvents передается в Event
             id={id}
+            testEvents={testEvents}
           />
         );
       })}

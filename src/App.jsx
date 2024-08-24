@@ -8,7 +8,6 @@ import "./common.scss";
 const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(new Date());
   const [events, setEvents] = useState(testEvents); // Здесь массив testEvents сохраняется в состоянии
-
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 
   return (
@@ -16,6 +15,8 @@ const App = () => {
       <Header
         weekStartDate={weekStartDate}
         setWeekStartDate={setWeekStartDate}
+        testEvents={events}
+        setEvents={setEvents}
       />
       <Calendar
         weekDates={weekDates}

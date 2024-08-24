@@ -3,7 +3,7 @@ import moment from "moment";
 import Modal from "../modal/Modal";
 import "./header.scss";
 
-const Header = ({ weekStartDate, setWeekStartDate }) => {
+const Header = ({ weekStartDate, setWeekStartDate, testEvents, setEvents }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -79,7 +79,13 @@ const Header = ({ weekStartDate, setWeekStartDate }) => {
         </button>
         <span className="navigation__displayed-week">{getDisplayedDate()}</span>
       </div>
-      {isModalOpen && <Modal closeModal={closeModal} />}
+      {isModalOpen && (
+        <Modal
+          closeModal={closeModal}
+          testEvents={testEvents}
+          setEvents={setEvents}
+        />
+      )}
     </header>
   );
 };
