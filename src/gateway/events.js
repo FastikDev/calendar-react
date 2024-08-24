@@ -1,4 +1,4 @@
-const events = [
+const testEvents = [
   {
     id: 1,
     title: 'Go to the gym',
@@ -29,4 +29,4 @@ const events = [
   },
 ];
 
-export default events;
+export default testEvents;
