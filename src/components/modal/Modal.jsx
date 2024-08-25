@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { createEvent, fetchEvent } from "../../gateway/eventsGateway";
 import PropTypes from "prop-types";
 import "./modal.scss";
 
-const Modal = ({ closeModal, testEvents, setEvents }) => {
+const Modal = ({ closeModal, setEvents }) => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -10,6 +11,16 @@ const Modal = ({ closeModal, testEvents, setEvents }) => {
     startTime: "",
     endTime: "",
   });
+
+  const onCreate = async (newEvent) => {
+    try {
+      await createEvent(newEvent);
+      const events = await fetchEvent();
+      setEvents(events);
+    } catch (error) {
+      console.error("Error creating event: ", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,17 +35,13 @@ const Modal = ({ closeModal, testEvents, setEvents }) => {
     const newEvent = {
       title: formData.title,
       description: formData.description,
-      dateFrom: new Date(`${formData.date}T${formData.startTime}`),
-      dateTo: new Date(`${formData.date}T${formData.endTime}`),
+      dateFrom: new Date(
+        `${formData.date}T${formData.startTime}`
+      ).toISOString(),
+      dateTo: new Date(`${formData.date}T${formData.endTime}`).toISOString(),
     };
-
-    const generateId = () => Math.floor(Math.random() * 10000);
-    const eventWithId = { ...newEvent, id: generateId() };
-
-    testEvents.push(eventWithId); // Добавляем новое событие в массив
-    setEvents([...testEvents]); // Обновляем состояние
-
-    closeModal(); // Закрываем модальное окно
+    onCreate(newEvent);
+    closeModal();
   };
 
   return (
@@ -95,10 +102,9 @@ const Modal = ({ closeModal, testEvents, setEvents }) => {
   );
 };
 
+export default Modal;
+
 Modal.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  testEvents: PropTypes.array.isRequired, // Ожидаем массив событий
-  setEvents: PropTypes.func.isRequired, // И функцию для их обновления
+  setEvents: PropTypes.func.isRequired,
 };
-
-export default Modal;

@@ -4,14 +4,7 @@ import RedTimeLine from "../redTimeLine/RedTimeLine.jsx";
 import { formatMins } from "../../../src/utils/dateUtils.js";
 import "./hour.scss";
 
-const Hour = ({
-  dataHour,
-  hourEvents,
-  setEvents,
-  testEvents,
-  dataDay,
-  month,
-}) => {
+const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
   return (
     <div className="calendar__time-slot" data-time={dataHour + 1}>
       {hourEvents.map(({ id, dateFrom, dateTo, title, description }) => {
@@ -30,9 +23,8 @@ const Hour = ({
             time={`${eventStart} - ${eventEnd}`}
             title={title}
             description={description}
-            setEvents={setEvents} // Пропс setEvents передается в Event
+            setEvents={setEvents}
             id={id}
-            testEvents={testEvents}
           />
         );
       })}
