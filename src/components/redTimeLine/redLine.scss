@@ -13,12 +13,12 @@
     border-left: 6px solid red; /* Закрашенный треугольник */
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
-    margin-right: 2px; /* Отступ между треугольником и линией */
   }
 
   &__line {
     height: 2px;
     width: 100%;
     background-color: red;
+    margin-left: -6px; /* Смещение линии влево, чтобы перекрыть пробел */
   }
 }
