@@ -1,7 +1,6 @@
 import React from "react";
 import Day from "../day/Day";
 import "./week.scss";
-import testEvents from "../../gateway/testEvents";
 
 const Week = ({ weekDates, events, setEvents, testEvents, month }) => {
   return (
@@ -11,7 +10,6 @@ const Week = ({ weekDates, events, setEvents, testEvents, month }) => {
           dayStart.getHours() + 24
         );
 
-        // Получаем все события для текущего дня
         const dayEvents = events.filter(
           (event) =>
             new Date(event.dateFrom) >= dayStart &&
@@ -22,7 +20,7 @@ const Week = ({ weekDates, events, setEvents, testEvents, month }) => {
           <Day
             key={dayStart}
             dataDay={dayStart.getDate()}
-            dayEvents={dayEvents} // Массив событий для дня передается в Day через пропс dayEvents
+            dayEvents={dayEvents}
             setEvents={setEvents}
             month={month}
             testEvents={testEvents}

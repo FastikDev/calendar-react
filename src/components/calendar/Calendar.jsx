@@ -3,10 +3,10 @@ import Navigation from "./../navigation/Navigation";
 import Week from "../week/Week";
 import Sidebar from "../sidebar/Sidebar";
 import "./calendar.scss";
-import { getDisplayMonth, getWeekStartDate } from "../../utils/dateUtils";
+import { getDisplayMonth } from "../../utils/dateUtils";
 
 const Calendar = ({ weekDates, events, setEvents, testEvents }) => {
-  const month = getDisplayMonth(getWeekStartDate(weekDates));
+  const month = getDisplayMonth(weekDates[0]);
 
   return (
     <section className="calendar">

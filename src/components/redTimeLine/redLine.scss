@@ -1,0 +1,16 @@
+.red-time {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  margin: 0;
+  margin-top: -2px;
+  z-index: 11;
+
+  &__line {
+    height: 2px;
+    width: 100%;
+    background-color: red;
+  }
+}

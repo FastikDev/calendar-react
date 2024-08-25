@@ -1,9 +1,17 @@
 import React from "react";
 import Event from "../event/Event";
+import RedTimeLine from "../redTimeLine/RedTimeLine.jsx";
 import { formatMins } from "../../../src/utils/dateUtils.js";
 import "./hour.scss";
 
-const Hour = ({ dataHour, hourEvents, setEvents, testEvents }) => {
+const Hour = ({
+  dataHour,
+  hourEvents,
+  setEvents,
+  testEvents,
+  dataDay,
+  month,
+}) => {
   return (
     <div className="calendar__time-slot" data-time={dataHour + 1}>
       {hourEvents.map(({ id, dateFrom, dateTo, title, description }) => {
@@ -28,6 +36,9 @@ const Hour = ({ dataHour, hourEvents, setEvents, testEvents }) => {
           />
         );
       })}
+      {dataHour === new Date().getHours() && (
+        <RedTimeLine dataDay={dataDay} month={month} />
+      )}
     </div>
   );
 };

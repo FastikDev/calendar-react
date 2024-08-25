@@ -16,7 +16,7 @@ const Day = ({ dataDay, dayEvents, setEvents, testEvents, month }) => {
 
         return (
           <Hour
-            key={`${dataDay}-${hour}`}
+            key={dataDay + hour}
             dataHour={hour}
             hourEvents={hourEvents} // Массив событий для часа передается в Hour через пропс hourEvents
             setEvents={setEvents}
