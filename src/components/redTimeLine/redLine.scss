@@ -1,6 +1,5 @@
 .red-time {
   display: flex;
-  flex-direction: row;
   align-items: center;
   position: absolute;
   width: 100%;
@@ -11,10 +10,10 @@
   &__triangle {
     width: 0;
     height: 0;
-    border-left: 6px solid red;
+    border-left: 6px solid red; /* Закрашенный треугольник */
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
-    margin-right: 2px;
+    margin-right: 2px; /* Отступ между треугольником и линией */
   }
 
   &__line {
