@@ -22,30 +22,23 @@
 }
 
 .delete-event-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: transparent;
-  border: none;
-  color: #fff;
-  width: 18px;
-  height: 18px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  z-index: 2;
+  background: #fff;
+  border: none;
+  border-radius: 4px;
+  height: 34px;
+  padding: 10px;
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  bottom: -30px;
+  right: -50px;
+  color: gray;
   cursor: pointer;
+}
+
+i {
   font-size: 14px;
-
-  &:hover {
-    color: #000;
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &::before {
-    content: "X";
-    font-size: 12px;
-  }
+  margin-right: 10px;
 }

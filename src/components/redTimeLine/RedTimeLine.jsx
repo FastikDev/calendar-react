@@ -11,8 +11,6 @@ const RedTimeLine = ({ dataDay, month }) => {
     top: getTopPosition(),
   });
 
-  console.log("Style:", style);
-
   useEffect(() => {
     const interval = setInterval(() => {
       setStyle({ top: getTopPosition() });

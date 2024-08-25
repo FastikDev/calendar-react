@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createEvent, fetchEvent } from "../../gateway/eventsGateway";
+import { validEvent } from "../../utils/validation";
 import PropTypes from "prop-types";
 import "./modal.scss";
 
@@ -12,14 +13,22 @@ const Modal = ({ closeModal, setEvents }) => {
     endTime: "",
   });
 
-  const onCreate = async (newEvent) => {
-    try {
-      await createEvent(newEvent);
-      const events = await fetchEvent();
-      setEvents(events);
-    } catch (error) {
-      console.error("Error creating event: ", error);
-    }
+  const onCreate = (newEvent) => {
+    fetchEvent()
+      .then((events) => {
+        const eventList = Array.isArray(events) ? events : [];
+
+        if (!validEvent(newEvent, eventList)) {
+          return;
+        }
+
+        return createEvent(newEvent);
+      })
+      .then(() => fetchEvent())
+      .then((updatedEvents) => {
+        setEvents(updatedEvents);
+        closeModal();
+      });
   };
 
   const handleChange = (e) => {
