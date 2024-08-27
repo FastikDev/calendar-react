@@ -17,7 +17,9 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
     console.log("dataDay type:", typeof dataDay);
     console.log("dataDay value:", dataDay);
 
-    const date = new Date(dataDay);
+    const [year, month, day] = dataDay.split('-').map(Number);
+const date = new Date(year, month - 1, day);
+    
     console.log("Initial date object:", date);
 
     date.setHours(dataHour);
