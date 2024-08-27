@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createEvent, fetchEvent } from "../../gateway/eventsGateway";
 import { validEvent } from "../../utils/validation";
 import PropTypes from "prop-types";
 import "./modal.scss";
 
-const Modal = ({ closeModal, setEvents }) => {
+const Modal = ({ dateStart, closeModal, setEvents }) => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -12,6 +12,21 @@ const Modal = ({ closeModal, setEvents }) => {
     startTime: "",
     endTime: "",
   });
+
+  useEffect(() => {
+    if (dateStart) {
+      const date = new Date(dateStart);
+      const dateString = date.toISOString().split("T")[0];
+      const timeString = date.toTimeString().split(" ")[0];
+
+      setFormData({
+        ...formData,
+        date: dateString,
+        startTime: timeString.substring(0, 5),
+        endTime: timeString.substring(0, 5),
+      });
+    }
+  }, [dateStart]);
 
   const onCreate = (newEvent) => {
     fetchEvent()
@@ -52,6 +67,10 @@ const Modal = ({ closeModal, setEvents }) => {
     onCreate(newEvent);
     closeModal();
   };
+
+  // if (!dateStart) {
+  //   return null;
+  // }
 
   return (
     <div className="modal overlay">

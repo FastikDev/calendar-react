@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { deleteEvent, fetchEvent } from "../../gateway/eventsGateway";
 import "./event.scss";
+import moment from "moment";
 
 const Event = ({
   id,
@@ -16,9 +17,19 @@ const Event = ({
     marginTop,
   };
 
-  const [showDeleteBnt, setShowDeleteBtn] = useState(false);
+  const [showDeleteBtn, setShowDeleteBtn] = useState(false);
 
   const handleDelete = (id) => {
+    const currentTime = moment();
+    const eventStartTime = moment(time, "HH:mm");
+    const thresholdTime = eventStartTime.clone().subtract(15, "minutes");
+
+    // Проверка, если текущее время больше или равно пороговому времени
+    if (currentTime.isSameOrAfter(thresholdTime)) {
+      alert("You cannot delete an event less than 15 minutes before it starts");
+      return;
+    }
+
     deleteEvent(id).then(() => fetchEvent().then(setEvents));
   };
 
@@ -28,15 +39,15 @@ const Event = ({
     setShowDeleteBtn(false);
   };
 
-  const toggleDeleteBnt = () => {
-    setShowDeleteBtn(!showDeleteBnt);
+  const toggleDeleteBtn = () => {
+    setShowDeleteBtn(!showDeleteBtn);
   };
 
   return (
-    <div style={eventStyle} className="event" onClick={toggleDeleteBnt}>
-      {showDeleteBnt && (
+    <div style={eventStyle} className="event" onClick={toggleDeleteBtn}>
+      {showDeleteBtn && (
         <button className="delete-event-btn" onClick={onDelete}>
-          <i className="fas fa-trash"></i>Delete
+          <i className="fas fa-trash"></i> Delete
         </button>
       )}
       <div className="event__title">{title}</div>

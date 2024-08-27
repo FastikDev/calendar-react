@@ -1,18 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import moment from "moment";
 import Modal from "../modal/Modal";
+import useModal from "../../hooks/useModal";
 import "./header.scss";
 
-const Header = ({ weekStartDate, setWeekStartDate, testEvents, setEvents }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const Header = ({ weekStartDate, setWeekStartDate, setEvents }) => {
+  const { isModalOpen, openModal, closeModal } = useModal();
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  console.log("Modal open state:", isModalOpen);
 
   const startOfWeek = moment(weekStartDate);
   const endOfWeek = moment(weekStartDate).add(6, "days");
@@ -79,13 +74,7 @@ const Header = ({ weekStartDate, setWeekStartDate, testEvents, setEvents }) => {
         </button>
         <span className="navigation__displayed-week">{getDisplayedDate()}</span>
       </div>
-      {isModalOpen && (
-        <Modal
-          closeModal={closeModal}
-          testEvents={testEvents}
-          setEvents={setEvents}
-        />
-      )}
+      {isModalOpen && <Modal closeModal={closeModal} setEvents={setEvents} />}
     </header>
   );
 };
