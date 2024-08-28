@@ -36,16 +36,13 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
     "Europe/Kiev"
   );
 
-  if (date.hour() < 2) {
-    date.add(1, 'day');
-  }
-
-  // Преобразование даты в ISO строку
-  const isoString = date.toISOString();
+  // Форматирование даты в ISO строку
+  const isoString = date.format(); // Можно указать формат, если нужно, например, 'YYYY-MM-DDTHH:mm:ssZ'
   console.log("Created ISO Date:", isoString);
 
   openModal(isoString);
 };
+
   return (
     <div
       className="calendar__time-slot"
