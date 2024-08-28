@@ -11,37 +11,38 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
   const { openModal, isModalOpen, closeModal, dateStart } = useModal();
 
   const handleSlotClick = (event) => {
-  const clickedElement = event.currentTarget;
-  const clickedDataDay = clickedElement.getAttribute("data-day");
-  const clickedDataHour = clickedElement.getAttribute("data-time");
+    const clickedElement = event.currentTarget;
+    const clickedDataDay = clickedElement.getAttribute("data-day");
+    const clickedDataHour = clickedElement.getAttribute("data-time");
 
-  if (hourEvents.length !== 0) {
-    return;
-  }
+    if (hourEvents.length !== 0) {
+      return;
+    }
 
-  const today = moment();
+    const today = moment();
 
-  // Извлечение года, месяца и дня из data-day и создание даты
-  const [year, month, day] = clickedDataDay.split('-').map(Number);
-  const date = moment.tz(
-    {
-      year: year,
-      month: month - 1, // Месяцы в moment.js начинаются с 0
-      day: day,
-      hour: Number(clickedDataHour),
-      minute: 0,
-      second: 0,
-      millisecond: 0,
-    },
-    "Europe/Kiev"
-  );
+    const date = moment.tz(
+      {
+        year: today.year(),
+        month: today.month(), // Месяцы в moment.js начинаются с 0
+        day: Number(clickedDataDay),
+        hour: Number(clickedDataHour),
+        minute: 0,
+        second: 0,
+        millisecond: 0,
+      },
+      "Europe/Kiev"
+    );
+    
+    if (date.hour() < 2) {
+      date.add(1, 'day');
+    }
 
-  // Форматирование даты в ISO строку
-  const isoString = date.format(); // Можно указать формат, если нужно, например, 'YYYY-MM-DDTHH:mm:ssZ'
-  console.log("Created ISO Date:", isoString);
+    const isoString = date.format();
+    console.log("Created ISO Date:", isoString);
 
-  openModal(isoString);
-};
+    openModal(isoString);
+  };
 
   return (
     <div
