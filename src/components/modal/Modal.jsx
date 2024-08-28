@@ -23,7 +23,7 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
         ...formData,
         date: dateString,
         startTime: timeString.substring(0, 5),
-        endTime: timeString.substring(0, 5),
+        endTime: "",
       });
     }
   }, [dateStart]);
