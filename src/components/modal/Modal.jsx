@@ -68,10 +68,6 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
     closeModal();
   };
 
-  // if (!dateStart) {
-  //   return null;
-  // }
-
   return (
     <div className="modal overlay">
       <div className="modal__content">

@@ -15,9 +15,6 @@ export const validEvent = (newEvent, existingEvent) => {
   const start = moment(dateFrom);
   const end = moment(dateTo);
 
-  console.log("Start date:", start.format());
-  console.log("End date:", end.format());
-
   const eventList = Array.isArray(existingEvent) ? existingEvent : [];
 
   // Проверка пересечения с существующими событиями
@@ -35,6 +32,45 @@ export const validEvent = (newEvent, existingEvent) => {
   // Проверка продолжительности события
   if (end.diff(start, "hour") > 6) {
     alert("The event cannot be longer than 6 hours");
+    return false;
+  }
+
+  return true;
+};
+
+export const canCreateEvent = (time) => {
+  const currentTime = moment();
+
+  const [startTimeStr] = time.split(" - ");
+
+  const eventStartTime = moment(
+    `${currentTime.format("YYYY-MM-DD")} ${startTimeStr}`,
+    "YYYY-MM-DD HH:mm"
+  );
+
+  if (currentTime.isBefore(eventStartTime)) {
+    alert("You can`t create event in Past time");
+    return false;
+  }
+
+  return true;
+};
+
+export const canDeleteEvent = (time) => {
+  const currentTime = moment(); // Текущее время
+
+  const [startTimeStr] = time.split(" - ");
+
+  const eventStartTime = moment(
+    `${currentTime.format("YYYY-MM-DD")} ${startTimeStr}`,
+    "YYYY-MM-DD HH:mm"
+  );
+
+  const differenceInMinutes = currentTime.diff(eventStartTime, "minutes");
+
+  // Проверка, если текущее время меньше времени начала события + 15 минут
+  if (differenceInMinutes <= 15) {
+    alert("You cannot delete an event less than 15 minutes before it starts");
     return false;
   }
 

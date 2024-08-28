@@ -7,8 +7,6 @@ import "./header.scss";
 const Header = ({ weekStartDate, setWeekStartDate, setEvents }) => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  console.log("Modal open state:", isModalOpen);
-
   const startOfWeek = moment(weekStartDate);
   const endOfWeek = moment(weekStartDate).add(6, "days");
 

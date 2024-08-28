@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { deleteEvent, fetchEvent } from "../../gateway/eventsGateway";
 import "./event.scss";
+import { canDeleteEvent } from "../../utils/validation";
 import moment from "moment";
 
 const Event = ({
@@ -8,7 +9,7 @@ const Event = ({
   height,
   marginTop,
   title,
-  time,
+  time, // Время в формате "HH:mm - HH:mm"
   description,
   setEvents,
 }) => {
@@ -19,14 +20,23 @@ const Event = ({
 
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
 
-  const handleDelete = (id) => {
+  useEffect(() => {
     const currentTime = moment();
-    const eventStartTime = moment(time, "HH:mm");
-    const thresholdTime = eventStartTime.clone().subtract(15, "minutes");
 
-    // Проверка, если текущее время больше или равно пороговому времени
-    if (currentTime.isSameOrAfter(thresholdTime)) {
-      alert("You cannot delete an event less than 15 minutes before it starts");
+    const [, endTimeStr] = time.split(" - ");
+    const eventEndTime = moment(
+      `${currentTime.format("YYYY-MM-DD")} ${endTimeStr}`,
+      "YYYY-MM-DD HH:mm"
+    );
+
+    if (currentTime.isAfter(eventEndTime)) {
+      console.log("Event has ended. Deleting event with ID:", id);
+      deleteEvent(id).then(() => fetchEvent().then(setEvents));
+    }
+  }, [id, time, setEvents]);
+
+  const handleDelete = (id) => {
+    if (!canDeleteEvent(time)) {
       return;
     }
 

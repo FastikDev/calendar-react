@@ -5,26 +5,62 @@ import RedTimeLine from "../redTimeLine/RedTimeLine.jsx";
 import { formatMins } from "../../../src/utils/dateUtils.js";
 import useModal from "../../hooks/useModal";
 import "./hour.scss";
+import moment from "moment-timezone";
 
 const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
   const { openModal, isModalOpen, closeModal, dateStart } = useModal();
 
-  const handleSlotClick = () => {
+  const handleSlotClick = (event) => {
+    const clickedElement = event.currentTarget;
+    const clickedDataDay = clickedElement.getAttribute("data-day");
+    const clickedDataHour = clickedElement.getAttribute("data-time");
+
     if (hourEvents.length !== 0) {
       return;
     }
 
-    console.log("dataDay type:", typeof dataDay);
-    console.log("dataDay value:", dataDay);
+    const today = moment();
 
-    const date = new Date(dataDay);
-    console.log("Initial date object:", date);
+    const testDate = (day, hour, timezone) => {
+      const date = moment.tz(
+        {
+          year: 2024,
+          month: 7, // Август (месяцы начинаются с 0)
+          day: day,
+          hour: hour,
+          minute: 0,
+          second: 0,
+          millisecond: 0,
+        },
+        timezone
+      );
 
-    date.setHours(dataHour);
-    date.setMinutes(0);
+      console.log(
+        `Date with Day ${day} and Hour ${hour} in ${timezone}:`,
+        date.format()
+      );
+      console.log(`ISO Date:`, date.toISOString());
+    };
 
-    const isoString = date.toISOString();
-    console.log("ISO string:", isoString);
+    // Проверьте даты до и после полночь
+    testDate(27, 23, "Europe/Kiev"); // До полуночи
+    testDate(28, 1, "Europe/Kiev"); // После полуночи
+
+    const date = moment.tz(
+      {
+        year: today.year(),
+        month: today.month(), // Месяцы в moment.js начинаются с 0
+        day: Number(clickedDataDay),
+        hour: Number(clickedDataHour),
+        minute: 0,
+        second: 0,
+        millisecond: 0,
+      },
+      "Europe/Kiev"
+    );
+
+    const isoString = date.format();
+    console.log("Created ISO Date:", isoString);
 
     openModal(isoString);
   };
@@ -32,7 +68,8 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
   return (
     <div
       className="calendar__time-slot"
-      data-time={dataHour + 1}
+      data-time={dataHour}
+      data-day={dataDay}
       onClick={handleSlotClick}
     >
       {hourEvents.map(({ id, dateFrom, dateTo, title, description }) => {
@@ -43,6 +80,7 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
           dateTo.getMinutes()
         )}`;
         const eventSize = (dateTo.getTime() - dateFrom.getTime()) / (1000 * 60);
+
         return (
           <Event
             key={id}
