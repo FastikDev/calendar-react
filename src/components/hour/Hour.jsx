@@ -21,31 +21,6 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
 
     const today = moment();
 
-    const testDate = (day, hour, timezone) => {
-      const date = moment.tz(
-        {
-          year: 2024,
-          month: 7, // Август (месяцы начинаются с 0)
-          day: day,
-          hour: hour,
-          minute: 0,
-          second: 0,
-          millisecond: 0,
-        },
-        timezone
-      );
-
-      console.log(
-        `Date with Day ${day} and Hour ${hour} in ${timezone}:`,
-        date.format()
-      );
-      console.log(`ISO Date:`, date.toISOString());
-    };
-
-    // Проверьте даты до и после полночь
-    testDate(27, 23, "Europe/Kiev"); // До полуночи
-    testDate(28, 1, "Europe/Kiev"); // После полуночи
-
     const date = moment.tz(
       {
         year: today.year(),
@@ -58,6 +33,10 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
       },
       "Europe/Kiev"
     );
+    
+    if (date.hour() < 2) {
+      date.add(1, 'day');
+    }
 
     const isoString = date.format();
     console.log("Created ISO Date:", isoString);
