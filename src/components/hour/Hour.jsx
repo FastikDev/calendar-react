@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Event from "../event/Event";
 import Modal from "../modal/Modal.jsx";
 import RedTimeLine from "../redTimeLine/RedTimeLine.jsx";
@@ -11,6 +12,8 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
   const { openModal, isModalOpen, closeModal, dateStart } = useModal();
 
   const handleSlotClick = (event) => {
+    // event.stopPropagation();
+
     const clickedElement = event.currentTarget;
     const clickedDataDay = clickedElement.getAttribute("data-day");
     const clickedDataHour = clickedElement.getAttribute("data-time");
@@ -34,13 +37,11 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
       "Europe/Kiev"
     );
 
-    if (date.hour() < 2) {
+    if (clickedDataHour < 3) {
       date.add(1, "day");
     }
 
     const isoString = date.format();
-    console.log("Created ISO Date:", isoString);
-
     openModal(isoString);
   };
 
