@@ -20,12 +20,16 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
       const date = new Date(dateStart);
       const dateString = date.toISOString().split("T")[0];
       const timeString = date.toTimeString().split(" ")[0];
+      
+      const [hours, minutes] = timeString.substring(0, 5).split(":");
+      const endTimeDate = new Date(date);
+      endTimeDate.setHours(Number(hours) + 1);
 
       setFormData({
         ...formData,
         date: dateString,
         startTime: timeString.substring(0, 5),
-        endTime: "",
+        endTime: endTimeDate,
       });
     }
   }, [dateStart]);
