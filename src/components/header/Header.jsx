@@ -5,7 +5,7 @@ import useModal from "../../hooks/useModal";
 import "./header.scss";
 
 const Header = ({ weekStartDate, setWeekStartDate, setEvents }) => {
-  const { isModalOpen, openModal, closeModal } = useModal();
+  const { isModalOpen, openModal, closeModal, dateStart } = useModal();
 
   const startOfWeek = moment(weekStartDate);
   const endOfWeek = moment(weekStartDate).add(6, "days");
@@ -48,9 +48,15 @@ const Header = ({ weekStartDate, setWeekStartDate, setEvents }) => {
     setWeekStartDate(new Date());
   };
 
+  const handleCreateClick = () => {
+    const currentTime = moment().format();
+
+    openModal(currentTime);
+  };
+
   return (
     <header className="header">
-      <button className="button create-event-btn" onClick={openModal}>
+      <button className="button create-event-btn" onClick={handleCreateClick}>
         <i className="fas fa-plus create-event-btn__icon" id="colored-plus"></i>
         Create
       </button>
@@ -72,7 +78,13 @@ const Header = ({ weekStartDate, setWeekStartDate, setEvents }) => {
         </button>
         <span className="navigation__displayed-week">{getDisplayedDate()}</span>
       </div>
-      {isModalOpen && <Modal closeModal={closeModal} setEvents={setEvents} />}
+      {isModalOpen && (
+        <Modal
+          closeModal={closeModal}
+          setEvents={setEvents}
+          dateStart={dateStart}
+        />
+      )}
     </header>
   );
 };
