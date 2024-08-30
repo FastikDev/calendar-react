@@ -10,9 +10,8 @@ const useModal = () => {
   };
 
   const closeModal = () => {
-    console.log("closeModal called");
+    console.log("Closing modal from button click...");
     setIsModalOpen(false);
-    setDateStart("");
   };
 
   return {

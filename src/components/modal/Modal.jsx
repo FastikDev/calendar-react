@@ -86,7 +86,13 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
     <div className="modal overlay">
       <div className="modal__content">
         <div className="create-event">
-          <button onClick={closeModal} className="create-event__close-btn">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              closeModal();
+            }}
+            className="create-event__close-btn"
+          >
             +
           </button>
           <form className="event-form" onSubmit={handleSubmit}>
