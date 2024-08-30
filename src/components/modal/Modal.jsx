@@ -64,6 +64,11 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
       ).toISOString(),
       dateTo: new Date(`${formData.date}T${formData.endTime}`).toISOString(),
     };
+    
+    if (!validEvent(newEvent)) {
+    return;
+    }
+    
     onCreate(newEvent);
     closeModal();
   };
