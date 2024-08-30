@@ -13,6 +13,8 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
     endTime: "",
   });
 
+  const [btnDisabled, setBtnDisabled] = useState(true);
+
   useEffect(() => {
     if (dateStart) {
       const date = new Date(dateStart);
@@ -27,6 +29,13 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
       });
     }
   }, [dateStart]);
+
+  useEffect(() => {
+    const isFormFilled = Object.values(formData).every(
+      (value) => value.trim() !== ""
+    );
+    setBtnDisabled(!isFormFilled);
+  }, [formData]);
 
   const onCreate = (newEvent) => {
     fetchEvent()
@@ -64,11 +73,11 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
       ).toISOString(),
       dateTo: new Date(`${formData.date}T${formData.endTime}`).toISOString(),
     };
-    
+
     if (!validEvent(newEvent)) {
-    return;
+      return;
     }
-    
+
     onCreate(newEvent);
     closeModal();
   };
@@ -121,7 +130,11 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
               onChange={handleChange}
             />
 
-            <button type="submit" className="event-form__submit-btn">
+            <button
+              type="submit"
+              className="event-form__submit-btn"
+              disabled={btnDisabled}
+            >
               Create
             </button>
           </form>

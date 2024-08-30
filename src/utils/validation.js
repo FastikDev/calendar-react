@@ -14,10 +14,20 @@ export const validEvent = (newEvent, existingEvent) => {
 
   const start = moment(dateFrom);
   const end = moment(dateTo);
-  
+
   // Проверка: время окончания должно быть позже времени начала
   if (end.isSameOrBefore(start)) {
     alert("End time must be later than start time.");
+    return false;
+  }
+
+  if (start.minutes() % 15 !== 0) {
+    alert("Start time must be in multiples of 15 minutes");
+    return false;
+  }
+
+  if (end.diff(start, "minutes") % 15 !== 0) {
+    alert("Event duration must be in multiples of 15 minutes");
     return false;
   }
 
@@ -74,8 +84,13 @@ export const canDeleteEvent = (time) => {
 
   const differenceInMinutes = currentTime.diff(eventStartTime, "minutes");
 
+  //Нельзя удалить событие если оно уже началось
+  if (currentTime.isAfter(eventStartTime)) {
+    alert("You can't delete the event once it has started");
+    return false;
+  }
   // Проверка, если текущее время меньше времени начала события + 15 минут
-  if (differenceInMinutes <= 15) {
+  if (differenceInMinutes >= 15) {
     alert("You cannot delete an event less than 15 minutes before it starts");
     return false;
   }
