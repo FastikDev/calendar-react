@@ -14,6 +14,12 @@ export const validEvent = (newEvent, existingEvent) => {
 
   const start = moment(dateFrom);
   const end = moment(dateTo);
+  
+  // Проверка: время окончания должно быть позже времени начала
+  if (end.isSameOrBefore(start)) {
+    alert("End time must be later than start time.");
+    return false;
+  }
 
   const eventList = Array.isArray(existingEvent) ? existingEvent : [];
 
