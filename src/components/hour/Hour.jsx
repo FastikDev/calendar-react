@@ -33,9 +33,9 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
       },
       "Europe/Kiev"
     );
-    
+
     if (date.hour() < 2) {
-      date.add(1, 'day');
+      date.add(1, "day");
     }
 
     const isoString = date.format();
