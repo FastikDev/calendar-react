@@ -13,20 +13,33 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
     endTime: "",
   });
 
+  const [btnDisabled, setBtnDisabled] = useState(true);
+
   useEffect(() => {
     if (dateStart) {
       const date = new Date(dateStart);
       const dateString = date.toISOString().split("T")[0];
       const timeString = date.toTimeString().split(" ")[0];
 
+      const [hours, minutes] = timeString.substring(0, 5).split(":");
+      const endTimeDate = new Date(date);
+      endTimeDate.setHours(Number(hours) + 1);
+
       setFormData({
         ...formData,
         date: dateString,
         startTime: timeString.substring(0, 5),
-        endTime: "",
+        endTime: endTimeDate,
       });
     }
   }, [dateStart]);
+
+  useEffect(() => {
+    const isFormFilled = Object.values(formData).every(
+      (value) => value.trim() !== ""
+    );
+    setBtnDisabled(!isFormFilled);
+  }, [formData]);
 
   const onCreate = (newEvent) => {
     fetchEvent()
@@ -64,7 +77,8 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
       ).toISOString(),
       dateTo: new Date(`${formData.date}T${formData.endTime}`).toISOString(),
     };
-    if (!validEvent(newEvent, [])) {
+
+    if (!validEvent(newEvent)) {
       return;
     }
 
@@ -76,7 +90,13 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
     <div className="modal overlay">
       <div className="modal__content">
         <div className="create-event">
-          <button onClick={closeModal} className="create-event__close-btn">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              closeModal();
+            }}
+            className="create-event__close-btn"
+          >
             +
           </button>
           <form className="event-form" onSubmit={handleSubmit}>
@@ -120,7 +140,11 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
               onChange={handleChange}
             />
 
-            <button type="submit" className="event-form__submit-btn">
+            <button
+              type="submit"
+              className="event-form__submit-btn"
+              disabled={btnDisabled}
+            >
               Create
             </button>
           </form>
