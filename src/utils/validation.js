@@ -12,11 +12,6 @@ export const validEvent = (newEvent, existingEvent) => {
     return false;
   }
 
-  if (end.isSameOrBefore(start)) {
-    alert("End time must be later than start time.");
-    return false;
-  }
-
   const start = moment(dateFrom);
   const end = moment(dateTo);
 

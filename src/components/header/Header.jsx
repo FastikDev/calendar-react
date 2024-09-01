@@ -1,57 +1,30 @@
 import React from "react";
-import moment from "moment";
 import Modal from "../modal/Modal";
 import useModal from "../../hooks/useModal";
+import { getDisplayMonth } from "../../utils/dateUtils";
 import "./header.scss";
 
 const Header = ({ weekStartDate, setWeekStartDate, setEvents }) => {
   const { isModalOpen, openModal, closeModal, dateStart } = useModal();
 
-  const startOfWeek = moment(weekStartDate);
-  const endOfWeek = moment(weekStartDate).add(6, "days");
-
-  const getDisplayedDate = () => {
-    const startMonth = startOfWeek.format("MMM");
-    const startYear = startOfWeek.format("YYYY");
-
-    const endMonth = endOfWeek.format("MMM");
-    const endYear = endOfWeek.format("YYYY");
-
-    if (startYear === endYear) {
-      if (startMonth === endMonth) {
-        return `${startMonth} ${startYear}`;
-      } else {
-        return `${startMonth} - ${endMonth} ${startYear}`;
-      }
-    } else {
-      return `${startMonth} ${startYear} - ${endMonth} ${endYear}`;
-    }
-  };
-
-  const handlePrevWeek = () => {
+  const updateWeekStartDate = (offset) => {
     setWeekStartDate((prevDate) => {
       const newDate = new Date(prevDate);
-      newDate.setDate(newDate.getDate() - 7);
+      newDate.setDate(newDate.getDate() + offset);
       return newDate;
     });
   };
 
-  const handleNextWeek = () => {
-    setWeekStartDate((prevDate) => {
-      const newDate = new Date(prevDate);
-      newDate.setDate(newDate.getDate() + 7);
-      return newDate;
-    });
-  };
+  const handlePrevWeek = () => updateWeekStartDate(-7);
+
+  const handleNextWeek = () => updateWeekStartDate(7);
 
   const handleToday = () => {
     setWeekStartDate(new Date());
   };
 
   const handleCreateClick = () => {
-    const currentTime = moment().format();
-
-    openModal(currentTime);
+    openModal(new Date().toISOString());
   };
 
   return (
@@ -76,7 +49,9 @@ const Header = ({ weekStartDate, setWeekStartDate, setEvents }) => {
         >
           <i className="fas fa-chevron-right"></i>
         </button>
-        <span className="navigation__displayed-week">{getDisplayedDate()}</span>
+        <span className="navigation__displayed-week">
+          {getDisplayMonth(weekStartDate)}
+        </span>
       </div>
       {isModalOpen && (
         <Modal
