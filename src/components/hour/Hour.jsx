@@ -89,10 +89,10 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
 };
 
 Hour.propTypes = {
-  dataHour: PropTypes.string.isRequired,
+  dataHour: PropTypes.number.isRequired,
   hourEvents: PropTypes.array.isRequired,
   setEvents: PropTypes.func.isRequired,
-  dataDay: PropTypes.string.isRequired,
+  dataDay: PropTypes.number.isRequired,
   month: PropTypes.string.isRequired,
 };
 
