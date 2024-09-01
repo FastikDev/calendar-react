@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Modal from "../modal/Modal";
 import useModal from "../../hooks/useModal";
 import { getDisplayMonth } from "../../utils/dateUtils";
@@ -62,6 +63,12 @@ const Header = ({ weekStartDate, setWeekStartDate, setEvents }) => {
       )}
     </header>
   );
+};
+
+Header.propTypes = {
+  weekStartDate: PropTypes.instanceOf(Date).isRequired,
+  setWeekStartDate: PropTypes.func.isRequired,
+  setEvents: PropTypes.func.isRequired,
 };
 
 export default Header;

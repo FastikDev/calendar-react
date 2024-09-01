@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { getDisplayMonth } from "../../utils/dateUtils";
 import "./redLine.scss";
 
@@ -39,6 +40,11 @@ const RedTimeLine = ({ dataDay, month }) => {
       <div className="red-time__line"></div>
     </div>
   );
+};
+
+RedTimeLine.propTypes = {
+  dataDay: PropTypes.number.isRequired,
+  month: PropTypes.string.isRequired,
 };
 
 export default RedTimeLine;

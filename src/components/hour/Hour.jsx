@@ -88,4 +88,12 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
   );
 };
 
+Hour.propTypes = {
+  dataHour: PropTypes.string.isRequired,
+  hourEvents: PropTypes.array.isRequired,
+  setEvents: PropTypes.func.isRequired,
+  dataDay: PropTypes.string.isRequired,
+  month: PropTypes.string.isRequired,
+};
+
 export default Hour;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { deleteEvent, fetchEvent } from "../../gateway/eventsGateway";
 import "./event.scss";
 import { canDeleteEvent } from "../../utils/validation";
@@ -9,7 +10,7 @@ const Event = ({
   height,
   marginTop,
   title,
-  time, // Время в формате "HH:mm - HH:mm"
+  time,
   description,
   setEvents,
 }) => {
@@ -65,6 +66,16 @@ const Event = ({
       <div className="event__description">{description}</div>
     </div>
   );
+};
+
+Event.propTypes = {
+  id: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
+  marginTop: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  time: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  setEvents: PropTypes.func.isRequired,
 };
 
 export default Event;
