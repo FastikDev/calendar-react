@@ -1,4 +1,4 @@
-## Project:React Google calendar
+## Project: React Google calendar
 
 ### [Netify](https://project-react-calendar.netlify.app/)
 
