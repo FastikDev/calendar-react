@@ -70,8 +70,8 @@ const Event = ({
 
 Event.propTypes = {
   id: PropTypes.string.isRequired,
-  height: PropTypes.string.isRequired,
-  marginTop: PropTypes.string.isRequired,
+  height: PropTypes.number.isRequired,
+  marginTop: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,

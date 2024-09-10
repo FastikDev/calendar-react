@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import { createEvent, fetchEvent } from '../../gateway/eventsGateway';
 import { validEvent } from '../../utils/validation';
 import PropTypes from 'prop-types';
