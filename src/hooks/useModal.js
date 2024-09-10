@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const useModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [dateStart, setDateStart] = useState("");
+  const [dateStart, setDateStart] = useState('');
 
-  const openModal = (dateFrom) => {
-    setDateStart(dateFrom);
+  const openModal = dateFrom => {
+    const formatDate = moment(dateFrom).format('HH:mm');
+    setDateStart(formatDate);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    console.log("Closing modal from button click...");
+    console.log('Closing modal from button click...');
     setIsModalOpen(false);
   };
 
