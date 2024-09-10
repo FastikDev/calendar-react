@@ -18,9 +18,8 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
   useEffect(() => {
     if (dateStart) {
       const date = new Date();
-      const dateString = date.toISOString().split('T')[0]; // Получаем строку даты
-      const timeString = dateStart; // Используем время из dateStart (например, 'HH:mm')
-
+      const dateString = date.toISOString().split('T')[0];
+      const timeString = dateStart;
       const [hours, minutes] = timeString.split(':');
       const endTimeDate = new Date(dateString);
       endTimeDate.setHours(Number(hours) + 1, Number(minutes));
@@ -28,8 +27,8 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
       setFormData({
         ...formData,
         date: dateString,
-        startTime: timeString, // Устанавливаем время начала
-        endTime: moment(endTimeDate).format('HH:mm'), // Форматируем время конца
+        startTime: timeString,
+        endTime: moment(endTimeDate).format('HH:mm'),
       });
     }
   }, [dateStart]);
