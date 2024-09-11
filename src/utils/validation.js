@@ -62,28 +62,20 @@ export const validEvent = (newEvent, existingEvent) => {
 
 export const canDeleteEvent = time => {
   const currentTime = moment();
-
   const [startTimeStr, endTimeStr] = time.split(' - ');
 
-  const eventStartTime = moment(
-    `${currentTime.format('YYYY-MM-DD')} ${startTimeStr}`,
-    'YYYY-MM-DD HH:mm',
-  );
+  const eventStartTime = moment(startTimeStr, 'YYYY-MM-DD HH:mm');
+  const eventEndTime = moment(endTimeStr, 'YYYY-MM-DD HH:mm');
 
-  const eventEndTime = moment(
-    `${currentTime.format('YYYY-MM-DD')} ${endTimeStr}`,
-    'YYYY-MM-DD HH:mm',
-  );
-
-  const differenceInMinutes = eventStartTime.diff(currentTime, 'minutes');
-
-  if (differenceInMinutes < 15 && differenceInMinutes >= 0) {
+  // Проверка, что текущее время меньше, чем время начала события плюс 15 минут
+  const timeBeforeStart = eventStartTime.diff(currentTime, 'minutes');
+  if (timeBeforeStart < 15 && timeBeforeStart >= 0) {
     alert('You cannot delete an event less than 15 minutes before it starts');
     return false;
   }
 
-  //Проверка, что текущее время больше времени начала и меньше времени окончания
-  if (currentTime.isBetween(eventStartTime, eventEndTime)) {
+  // Проверка, что текущее время больше времени начала и меньше времени окончания события
+  if (currentTime.isBetween(eventStartTime, eventEndTime, null, '[)')) {
     alert("You can't delete the event while it's in progress");
     return false;
   }
