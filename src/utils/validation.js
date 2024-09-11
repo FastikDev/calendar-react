@@ -3,14 +3,21 @@ import moment from 'moment';
 export const validEvent = (newEvent, existingEvent) => {
   const { dateFrom, dateTo } = newEvent;
 
-  // Проверка на текущий день
-  const selectedDate = moment(dateFrom).startOf('day');
-  const today = moment().startOf('day');
+  const selectedStart = moment(dateFrom).format('HH:mm'); // Время начала события
+const selectedEnd = moment(dateTo).format('HH:mm');     // Время конца события
+const now = moment();                                   // Текущая дата и время
 
-  if (!selectedDate.isSame(today)) {
-    alert('The event must start and end within one day');
-    return false;
-  }
+// Проверка, что дата начала события не меньше текущей
+if (moment(dateFrom).isBefore(now, 'minute')) {
+  alert('The event cannot start in the past');
+  return false;
+}
+
+// Проверка, что время начала и конца совпадают
+if (selectedStart !== selectedEnd) {
+  alert('The event must start and end at the same time of day');
+  return false;
+}
 
   const start = moment(dateFrom);
   const end = moment(dateTo);
