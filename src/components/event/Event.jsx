@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { deleteEvent, fetchEvent } from "../../gateway/eventsGateway";
-import "./event.scss";
-import { canDeleteEvent } from "../../utils/validation";
-import moment from "moment";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { deleteEvent, fetchEvent } from '../../gateway/eventsGateway';
+import './event.scss';
+import { canDeleteEvent } from '../../utils/validation';
+import moment from 'moment';
 
-const Event = ({
-  id,
-  height,
-  marginTop,
-  title,
-  time,
-  description,
-  setEvents,
-}) => {
+const Event = ({ id, height, marginTop, title, time, description, setEvents }) => {
   const eventStyle = {
     height,
     marginTop,
@@ -21,7 +13,7 @@ const Event = ({
 
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
 
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     if (!canDeleteEvent(time)) {
       return;
     }
@@ -29,7 +21,7 @@ const Event = ({
     deleteEvent(id).then(() => fetchEvent().then(setEvents));
   };
 
-  const onDelete = (event) => {
+  const onDelete = event => {
     event.stopPropagation();
     handleDelete(id);
     setShowDeleteBtn(false);
