@@ -3,37 +3,36 @@ import moment from 'moment';
 export const validEvent = (newEvent, existingEvent) => {
   const { dateFrom, dateTo } = newEvent;
 
-  const selectedStart = moment(dateFrom).format('HH:mm'); // Время начала события
-const selectedEnd = moment(dateTo).format('HH:mm');     // Время конца события
-const now = moment();                                   // Текущая дата и время
+  const selectedStart = moment(dateFrom); // Дата и время начала события
+  const selectedEnd = moment(dateTo);     // Дата и время конца события
+  const now = moment();                   // Текущая дата и время
 
-// Проверка, что дата начала события не меньше текущей
-if (moment(dateFrom).isBefore(now, 'minute')) {
-  alert('The event cannot start in the past');
-  return false;
-}
+  // Проверка, что событие не начинается в прошлом
+  if (selectedStart.isBefore(now, 'minute')) {
+    alert('The event cannot start in the past');
+    return false;
+  }
 
-// Проверка, что время начала и конца совпадают
-if (selectedStart !== selectedEnd) {
-  alert('The event must start and end at the same time of day');
-  return false;
-}
-
-  const start = moment(dateFrom);
-  const end = moment(dateTo);
+  // Проверка, что событие начинается и заканчивается в один и тот же день
+  if (!selectedStart.isSame(selectedEnd, 'day')) {
+    alert('The event must start and end within the same day');
+    return false;
+  }
 
   // Проверка: время окончания должно быть позже времени начала
-  if (end.isSameOrBefore(start)) {
+  if (selectedEnd.isSameOrBefore(selectedStart)) {
     alert('End time must be later than start time.');
     return false;
   }
 
-  if (start.minutes() % 15 !== 0) {
+  // Проверка: время начала должно быть кратно 15 минутам
+  if (selectedStart.minutes() % 15 !== 0) {
     alert('Start time must be in multiples of 15 minutes');
     return false;
   }
 
-  if (end.diff(start, 'minutes') % 15 !== 0) {
+  // Проверка: продолжительность события должна быть кратна 15 минутам
+  if (selectedEnd.diff(selectedStart, 'minutes') % 15 !== 0) {
     alert('Event duration must be in multiples of 15 minutes');
     return false;
   }
@@ -44,7 +43,7 @@ if (selectedStart !== selectedEnd) {
   const hasIntersection = eventList.some(event => {
     const eventStart = moment(event.dateFrom);
     const eventEnd = moment(event.dateTo);
-    return start.isBefore(eventEnd) && end.isAfter(eventStart);
+    return selectedStart.isBefore(eventEnd) && selectedEnd.isAfter(eventStart);
   });
 
   if (hasIntersection) {
@@ -53,7 +52,7 @@ if (selectedStart !== selectedEnd) {
   }
 
   // Проверка продолжительности события
-  if (end.diff(start, 'hour') > 6) {
+  if (selectedEnd.diff(selectedStart, 'hour') > 6) {
     alert('The event cannot be longer than 6 hours');
     return false;
   }
