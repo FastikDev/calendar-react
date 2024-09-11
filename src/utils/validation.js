@@ -54,24 +54,6 @@ export const validEvent = (newEvent, existingEvent) => {
   return true;
 };
 
-export const canCreateEvent = time => {
-  const currentTime = moment();
-
-  const [startTimeStr] = time.split(' - ');
-
-  const eventStartTime = moment(
-    `${currentTime.format('YYYY-MM-DD')} ${startTimeStr}`,
-    'YYYY-MM-DD HH:mm',
-  );
-
-  if (currentTime.isBefore(eventStartTime)) {
-    alert('You can`t create event in Past time');
-    return false;
-  }
-
-  return true;
-};
-
 export const canDeleteEvent = time => {
   const currentTime = moment();
 
