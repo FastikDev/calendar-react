@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { createEvent, fetchEvent } from '../../gateway/eventsGateway';
 import { validEvent } from '../../utils/validation';
 import PropTypes from 'prop-types';
@@ -18,19 +18,20 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
 
   useEffect(() => {
     if (dateStart) {
-      const date = new Date();
-      const dateString = date.toISOString().split('T')[0];
-      const timeString = dateStart;
-      const [hours, minutes] = timeString.split(':');
-      const endTimeDate = new Date(dateString);
-      endTimeDate.setHours(Number(hours) + 1, Number(minutes));
+      const date = moment(dateStart);
+      if (date.isValid()) {
+        const dateString = date.format('YYYY-MM-DD');
+        const timeString = date.format('HH:mm');
+        const endTimeDate = date.clone().add(1, 'hour');
+        const endTimeString = endTimeDate.format('HH:mm');
 
-      setFormData({
-        ...formData,
-        date: dateString,
-        startTime: timeString,
-        endTime: moment(endTimeDate).format('HH:mm'),
-      });
+        setFormData({
+          ...formData,
+          date: dateString,
+          startTime: timeString,
+          endTime: endTimeString,
+        });
+      }
     }
   }, [dateStart]);
 

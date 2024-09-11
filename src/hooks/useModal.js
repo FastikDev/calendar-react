@@ -6,7 +6,7 @@ const useModal = () => {
   const [dateStart, setDateStart] = useState('');
 
   const openModal = dateFrom => {
-    const formatDate = moment(dateFrom).format('HH:mm');
+    const formatDate = moment(dateFrom).format('YYYY-MM-DDTHH:mm');
     setDateStart(formatDate);
     setIsModalOpen(true);
   };

@@ -3,9 +3,9 @@ import moment from 'moment';
 export const validEvent = (newEvent, existingEvent) => {
   const { dateFrom, dateTo } = newEvent;
 
-  const selectedStart = moment(dateFrom); // Дата и время начала события
-  const selectedEnd = moment(dateTo);     // Дата и время конца события
-  const now = moment();                   // Текущая дата и время
+  const selectedStart = moment(dateFrom);
+  const selectedEnd = moment(dateTo);
+  const now = moment();
 
   // Проверка, что событие не начинается в прошлом
   if (selectedStart.isBefore(now, 'minute')) {

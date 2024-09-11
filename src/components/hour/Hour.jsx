@@ -1,47 +1,42 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Event from "../event/Event";
-import Modal from "../modal/Modal.jsx";
-import RedTimeLine from "../redTimeLine/RedTimeLine.jsx";
-import { formatMins } from "../../../src/utils/dateUtils.js";
-import useModal from "../../hooks/useModal";
-import "./hour.scss";
-import moment from "moment-timezone";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Event from '../event/Event';
+import Modal from '../modal/Modal.jsx';
+import RedTimeLine from '../redTimeLine/RedTimeLine.jsx';
+import { formatMins } from '../../../src/utils/dateUtils.js';
+import useModal from '../../hooks/useModal';
+import './hour.scss';
+import moment from 'moment-timezone';
 
 const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
   const { openModal, isModalOpen, closeModal, dateStart } = useModal();
 
-  const handleSlotClick = (event) => {
-    // event.stopPropagation();
-
+  const handleSlotClick = event => {
     const clickedElement = event.currentTarget;
-    const clickedDataDay = clickedElement.getAttribute("data-day");
-    const clickedDataHour = clickedElement.getAttribute("data-time");
+    const clickedDataDay = clickedElement.getAttribute('data-day');
+    const clickedDataHour = clickedElement.getAttribute('data-time');
 
     if (hourEvents.length !== 0) {
       return;
     }
 
-    const today = moment();
+    const today = moment().tz('Europe/Kiev');
 
     const date = moment.tz(
       {
         year: today.year(),
-        month: today.month(), // Месяцы в moment.js начинаются с 0
-        day: Number(clickedDataDay),
+        month: today.month(),
+        date: Number(clickedDataDay),
         hour: Number(clickedDataHour),
         minute: 0,
         second: 0,
         millisecond: 0,
       },
-      "Europe/Kiev"
+      'Europe/Kiev',
     );
 
-    if (clickedDataHour < 3) {
-      date.add(1, "day");
-    }
+    const isoString = date.toISOString();
 
-    const isoString = date.format();
     openModal(isoString);
   };
 
@@ -53,12 +48,8 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
       onClick={handleSlotClick}
     >
       {hourEvents.map(({ id, dateFrom, dateTo, title, description }) => {
-        const eventStart = `${dateFrom.getHours()}:${formatMins(
-          dateFrom.getMinutes()
-        )}`;
-        const eventEnd = `${dateTo.getHours()}:${formatMins(
-          dateTo.getMinutes()
-        )}`;
+        const eventStart = `${dateFrom.getHours()}:${formatMins(dateFrom.getMinutes())}`;
+        const eventEnd = `${dateTo.getHours()}:${formatMins(dateTo.getMinutes())}`;
         const eventSize = (dateTo.getTime() - dateFrom.getTime()) / (1000 * 60);
 
         return (
@@ -74,16 +65,8 @@ const Hour = ({ dataHour, hourEvents, setEvents, dataDay, month }) => {
           />
         );
       })}
-      {dataHour === new Date().getHours() && (
-        <RedTimeLine dataDay={dataDay} month={month} />
-      )}
-      {isModalOpen && (
-        <Modal
-          closeModal={closeModal}
-          setEvents={setEvents}
-          dateStart={dateStart}
-        />
-      )}
+      {dataHour === new Date().getHours() && <RedTimeLine dataDay={dataDay} month={month} />}
+      {isModalOpen && <Modal closeModal={closeModal} setEvents={setEvents} dateStart={dateStart} />}
     </div>
   );
 };

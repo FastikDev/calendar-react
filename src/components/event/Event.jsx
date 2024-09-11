@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { deleteEvent, fetchEvent } from '../../gateway/eventsGateway';
 import './event.scss';
 import { canDeleteEvent } from '../../utils/validation';
-import moment from 'moment';
 
 const Event = ({ id, height, marginTop, title, time, description, setEvents }) => {
   const eventStyle = {
@@ -32,16 +31,18 @@ const Event = ({ id, height, marginTop, title, time, description, setEvents }) =
   };
 
   return (
-    <div style={eventStyle} className="event" onClick={toggleDeleteBtn}>
+    <>
+      <div style={eventStyle} className="event" onClick={toggleDeleteBtn}>
+        <div className="event__title">{title}</div>
+        <div className="event__time">{time}</div>
+        <div className="event__description">{description}</div>
+      </div>
       {showDeleteBtn && (
         <button className="delete-event-btn" onClick={onDelete}>
           <i className="fas fa-trash"></i> Delete
         </button>
       )}
-      <div className="event__title">{title}</div>
-      <div className="event__time">{time}</div>
-      <div className="event__description">{description}</div>
-    </div>
+    </>
   );
 };
 
