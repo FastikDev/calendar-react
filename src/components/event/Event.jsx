@@ -21,21 +21,6 @@ const Event = ({
 
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
 
-  useEffect(() => {
-    const currentTime = moment();
-
-    const [, endTimeStr] = time.split(" - ");
-    const eventEndTime = moment(
-      `${currentTime.format("YYYY-MM-DD")} ${endTimeStr}`,
-      "YYYY-MM-DD HH:mm"
-    );
-
-    if (currentTime.isAfter(eventEndTime)) {
-      console.log("Event has ended. Deleting event with ID:", id);
-      deleteEvent(id).then(() => fetchEvent().then(setEvents));
-    }
-  }, [id, time, setEvents]);
-
   const handleDelete = (id) => {
     if (!canDeleteEvent(time)) {
       return;
