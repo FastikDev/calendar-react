@@ -6,6 +6,9 @@
   border-radius: 8px;
   padding: 8px;
   color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: auto;
 
   &__title {
     width: 100%;
@@ -13,6 +16,11 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-bottom: 8px;
+  }
+
+  &__description {
+    flex: 1;
+    overflow-y: auto;
   }
 
   &:hover {
