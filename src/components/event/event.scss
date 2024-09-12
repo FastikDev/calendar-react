@@ -8,8 +8,8 @@
   color: #fff;
   display: flex;
   flex-direction: column;
-  height: auto;
-  overflow-y: scroll;
+  max-height: auto;
+  overflow-y: auto;
   overflow-x: hidden;
 
   &__title {
