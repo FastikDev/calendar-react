@@ -14,11 +14,16 @@
   cursor: pointer;
 
   &__title {
+    font-weight: 700;
     width: 100%;
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-bottom: 8px;
+  }
+
+  &__description {
+    margin-top: 10px;
+    overflow-x: auto;
   }
 
   ::-webkit-scrollbar {
