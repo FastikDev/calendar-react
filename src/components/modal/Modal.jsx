@@ -14,6 +14,8 @@ const Modal = ({ dateStart, closeModal, setEvents }) => {
     endTime: '',
   });
 
+  console.log(typeof dateStart);
+
   const [btnDisabled, setBtnDisabled] = useState(true);
 
   useEffect(() => {
@@ -152,4 +154,5 @@ export default Modal;
 Modal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   setEvents: PropTypes.func.isRequired,
+  dateStart: PropTypes.string.isRequired,
 };

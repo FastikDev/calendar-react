@@ -1,18 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Hour from "../hour/Hour";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Hour from '../hour/Hour';
 
 const Day = ({ dataDay, dayEvents, setEvents, month }) => {
   const hours = Array(24)
     .fill()
-    .map((val, index) => index);
+    .map((_, index) => index);
 
   return (
     <div className="calendar__day" data-day={dataDay}>
-      {hours.map((hour) => {
-        const hourEvents = dayEvents.filter(
-          (event) => event.dateFrom.getHours() === hour
-        );
+      {hours.map(hour => {
+        const hourEvents = dayEvents.filter(event => event.dateFrom.getHours() === hour);
 
         return (
           <Hour

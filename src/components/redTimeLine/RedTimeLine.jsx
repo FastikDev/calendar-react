@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { getDisplayMonth } from "../../utils/dateUtils";
-import "./redLine.scss";
-
-const getTopPosition = () => {
-  return `${new Date().getMinutes() - 2.5}px`;
-};
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { getDisplayMonth } from '../../utils/dateUtils';
+import './redLine.scss';
 
 const RedTimeLine = ({ dataDay, month }) => {
+  const getTopPosition = () => {
+    return `${new Date().getMinutes() - 2.5}px`;
+  };
+
   const [style, setStyle] = useState({
     top: getTopPosition(),
   });
@@ -30,14 +30,9 @@ const RedTimeLine = ({ dataDay, month }) => {
   }
 
   return (
-    <div
-      style={style}
-      className="red-time"
-      data-month={currentMonth}
-      data-day={currentDay}
-    >
-      <div className="red-time__triangle"></div>
-      <div className="red-time__line"></div>
+    <div style={style} className="red-time" data-month={currentMonth} data-day={currentDay}>
+      <div className="red-time__triangle" />
+      <div className="red-time__line" />
     </div>
   );
 };
